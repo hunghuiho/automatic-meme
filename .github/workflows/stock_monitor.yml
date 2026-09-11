@@ -1,0 +1,34 @@
+name: Stock Pattern Alert & Broadcast
+
+on:
+  schedule:
+    # 禮拜一至禮拜五，UTC 21:00（台灣時間清晨 5:00，覆蓋美股與台股盤後數據）
+    - cron: '0 21 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install pandas yfinance requests
+
+      - name: Run Daily Monitor
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+        run: |
+          # 判斷是否為週五，帶入 --friday 參數
+          if [ $(date +%u) -eq 5 ]; then
+            python monitor.py --friday
+          else
+            python monitor.py
+          fi
