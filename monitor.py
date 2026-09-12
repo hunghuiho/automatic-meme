@@ -5,7 +5,7 @@ import pandas as pd
 import yfinance as yf
 
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN")
-PA_API_URL = "https://your-username.pythonanywhere.com/api/update_signals"
+PA_API_URL = "https://hunghuiho.pythonanywhere.com/api/update_signals"
 
 def send_line_broadcast(text):
     headers = {
