@@ -7,7 +7,7 @@ DB_FILE = "latest_signals.json"
 @app.route('/')
 def index():
     return render_template('index.html')
-
+#manifest.json不需要實際存在這個個檔案
 @app.route('/manifest.json')
 def manifest():
     return jsonify({
@@ -33,7 +33,8 @@ def get_signals():
         with open(DB_FILE, 'r') as f:
             return jsonify(json.load(f))
     except FileNotFoundError:
-        return jsonify([])
+        # 檔案不存在時的預設 JSON 結構
+        return jsonify({"date": "尚未更新", "has_signals": False, "signals": []})
 
 if __name__ == '__main__':
     app.run()
