@@ -3,7 +3,7 @@ name: Stock Pattern Alert & Broadcast
 on:
   schedule:
     # 禮拜一至禮拜五，UTC 21:00（台灣時間清晨 5:00，覆蓋美股與台股盤後數據）
-    - cron: '30 2 * * 1-5'
+    - cron: '0 21 * * 1-5'
   workflow_dispatch:
 
 jobs:
