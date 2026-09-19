@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, request
 import json
 
 app = Flask(__name__)
+API_SECRET = "0989320957" #設定您的專屬密碼
 DB_FILE = "latest_signals.json"
 
 @app.route('/')
@@ -22,6 +23,11 @@ def manifest():
 
 @app.route('/api/update_signals', methods=['POST'])
 def update_signals():
+    # 檢查請求頭中的 Key 是否正確
+    user_key = request.headers.get('X-API-KEY')
+    if user_key != API_SECRET:
+        return jsonify({"error": "Unauthorized"}), 401
+
     data = request.json
     with open(DB_FILE, 'w') as f:
         json.dump(data, f)

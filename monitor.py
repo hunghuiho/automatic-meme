@@ -7,6 +7,9 @@ import yfinance as yf
 
 LINE_CHANNEL_ACCESS_TOKEN = os.environ.get("LINE_CHANNEL_ACCESS_TOKEN")
 PA_API_URL = "https://hunghuiho.pythonanywhere.com/api/update_signals"
+headers = {
+    "X-API-KEY": "0989320957"
+}
 
 def send_line_broadcast(text):
     headers = {
@@ -91,7 +94,7 @@ def check_daily_signals(is_friday=False):
     if signals:
         msg = "🚀 【強勢起漲訊號通知】\n" + "\n".join([f"• {s['name']}({s['symbol']}) | 價: {s['close']} | 安全指數: {s['safety_score']}" for s in signals])
     else:
-        msg = f"📊 【股市監控日報】({today_str})\n今日無符合起漲條件之個股，市場平靜。"
+        msg = f"📊 【股市監控日報】({today_str})\n今日無符合起漲條件之個股，市場平靜。暫時測試"
 
     send_line_broadcast(msg)
 
@@ -107,7 +110,7 @@ def check_daily_signals(is_friday=False):
         "signals": signals,
     }
     try:
-        requests.post(PA_API_URL, json=payload_to_pa, timeout=10)
+        requests.post(PA_API_URL, json=payload_to_pa, headers=headers, timeout=10)
     except Exception as e:
         print(f"同步至 PythonAnywhere 失敗: {e}")    
     # old file: requests.post(PA_API_URL, json=signals)
