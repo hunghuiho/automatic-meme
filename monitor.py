@@ -1,6 +1,6 @@
 import os
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import pandas as pd
 import yfinance as yf
