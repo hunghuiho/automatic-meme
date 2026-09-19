@@ -30,8 +30,8 @@ def send_line_broadcast(text):
 def check_daily_signals(is_friday=False):
     stocks_df = pd.read_csv("stocks.csv")
     signals = []
-    #today_str = datetime.now().strftime("%Y-%m-%d")
-    today_str = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    #today_str = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d") #shift 1 day
     
     for _, row in stocks_df.iterrows():
         #260917 symbol = row['symbol']
