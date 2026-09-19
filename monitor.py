@@ -30,7 +30,8 @@ def send_line_broadcast(text):
 def check_daily_signals(is_friday=False):
     stocks_df = pd.read_csv("stocks.csv")
     signals = []
-    today_str = datetime.now().strftime("%Y-%m-%d")
+    #today_str = datetime.now().strftime("%Y-%m-%d")
+    today_str = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
     
     for _, row in stocks_df.iterrows():
         #260917 symbol = row['symbol']
@@ -94,7 +95,7 @@ def check_daily_signals(is_friday=False):
     if signals:
         msg = "🚀 【強勢起漲訊號通知】\n" + "\n".join([f"• {s['name']}({s['symbol']}) | 價: {s['close']} | 安全指數: {s['safety_score']}" for s in signals])
     else:
-        msg = f"📊 【股市監控日報】({today_str})\n今日無符合起漲條件之個股，市場平靜。暫時測試"
+        msg = f"📊 【股市監控日報】({today_str})\n今日無符合起漲條件之個股，市場平靜。"
 
     send_line_broadcast(msg)
 
